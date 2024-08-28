@@ -1,0 +1,13 @@
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/a1366325-1071-4eeb-94bd-27915747b177/download/siget-contrato-empreendimento-obra-modulo.csv
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/caec5e88-c904-45e5-bde4-d7e96ef139b6/download/siget-contrato-moduloequipamento-subestacao.csv
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/4343dcda-284a-4ede-b3b9-e809ea18385c/download/siget-contrato-modulogeral-subestacao-tipoarranjo.csv
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/89caca18-e9a8-484c-8772-c67b456d801a/download/siget-contrato-modulolinhatransmissao-subestacaoorigem-subestacaodestino.csv
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/7c4e7f67-b674-4223-89c5-83c95cea1450/download/siget-resolucao-modulomanobra-subestacao-tipoarranjo.csv
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/59ab6779-505e-4aa9-8641-3e07aca25699/download/siget-resolucao-contrato-agente.csv
+
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/4bb4aec4-7ef4-4fc2-8d02-df8b255b336e/download/dm-siget-contrato-empreendimento-obra-modulo.pdf
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/5954ec2b-34b8-4e0f-bd3b-48bacd40df8c/download/dm-siget-contrato-modulo-equipamento-subestacao.pdf
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/42a692b6-2f1a-42df-893e-976ea28ffd3d/download/dm-siget-contrato-modulo-geral-subestacao-tipo-arranjo.pdf
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/a1b0fe77-3498-44f7-a126-06a8a407c725/download/dm-siget-contrato-modulo-manobra-subestacao-tipo-arranjo.pdf
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/e20b8f57-fbfb-4f69-8524-fd857129f01c/download/dm-siget-resolucao-contrato-agente.pdf
+https://dadosabertos.aneel.gov.br/dataset/beefe870-7452-4830-a7b0-6611e3d5eff6/resource/3318141b-1c1a-4430-9909-2227ef6486ef/download/dm-siget-contrato-modulo-linha-transmissao-subestacao-origem-subestacao-destino.pdf
