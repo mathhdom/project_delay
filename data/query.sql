@@ -1,2 +1,2 @@
-SELECT *
-FROM abt_total
+SELECT * FROM abt_table
+

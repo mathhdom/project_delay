@@ -1,1 +1,0 @@
-SELECT * FROM modulo_empreendimento_obra
