@@ -1,2 +1,2 @@
-SELECT * FROM abt_table
-
+-- schedule, detail_work, detail_project, projects
+SELECT * FROM schedule

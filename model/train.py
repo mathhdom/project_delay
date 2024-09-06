@@ -1,0 +1,1 @@
+## Criar categorias de 'atraso' utilizando kmeans e decision tree igual ao Teo
