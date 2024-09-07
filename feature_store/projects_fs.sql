@@ -15,4 +15,4 @@ SELECT
     "Acréscimo Pot Reat Positiva" AS pos_reactive_power,
     "Acréscimo Pot Reat Negativa" AS neg_reactive_power
 
-FROM projects;
+FROM projects
