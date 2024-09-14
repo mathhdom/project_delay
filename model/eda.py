@@ -19,9 +19,12 @@ with open('abt.sql', 'r', encoding='utf-8') as open_file:
 #%%
 
 df = pd.read_sql(query, engine)
+#%%
 
-# %%
+df.info()
 
+
+#%%
 def transformations(df):
 
     col_dates = [
@@ -34,18 +37,33 @@ def transformations(df):
     for col in col_dates:
         df[col] = pd.to_datetime(df[col])
 
-    df = df[(df['project_status'] != 'Revogada')]
+    df['real_duration'] = (df['real_project_end'] - df['baseline_date_legal_act']).dt.total_seconds() / 86400
 
-    return df
-
-def new_features(df):
-
-        order_columns = [
+    df['module_type'] = df['module'].str.split(' ').apply(lambda x: x[0])
+    df['module_value'] = df['module'].str.split(' ').apply(lambda x: x[1].replace('-', '').replace(',', '.'))
+    df['module_unit_value'] = df['module'].str.split(' ').apply(lambda x: x[2])
+    
+    df = df[(df['project_status'] != 'Revogada') & 
+        (df['legal_deadline'] > 0 )]
+    
+    df.loc[
+            (df['project_status'] == 'Em andamento') |
+            (df['project_status'] == 'Planejado'), 
+            'real_duration'] = 0
+    
+    df = df[(df['project_status'].isin(['Em andamento', 'Planejado'])) | 
+        ((df['project_status'] == 'Em operação') & (df['real_duration'] > 0)) |
+        ((df['project_status'] == 'Concluído') & (df['real_duration'] > 0))
+    ]
+    
+    order_columns = [
         'project',
         'project_type',
         'project_status',
         'modules_number',
-        'module',
+        'module_type',
+        'module_value',
+        'module_unit_value',
         'agent',
         'legal_act',
         'km',
@@ -54,20 +72,31 @@ def new_features(df):
         'neg_reactive_power',
 
         'baseline_date_legal_act', # data de inicio no ato legal
-        'baseline_end_date' # data de termino no ato legal
-        'legal_deadline' # prazo da obra no ato legal
+        'baseline_end_date',       # data de termino no ato legal
+        'legal_deadline',          # prazo da obra no ato legal
 
-        'real_end_date' # data de termino real do projeto
+        'real_end_date',           # data de termino real do projeto
+        'real_project_end',         # termino real do modulo
+        'real_duration'
+    ]
 
-        'real_project_end' #termino real do modulo
-        ]
+    df = df.reset_index(drop=True)
+
+    return df[order_columns]
 
 # %%
-
 df = transformations(df)
 
-# %%
+#%%
 
+df['module_type'] = df['module'].str.split(' ').apply(lambda x: x[0])
+df['module_value'] = df['module'].str.split(' ').apply(lambda x: x[1].replace('-', '').replace(',', '.'))
+df['module_unit_value'] = df['module'].str.split(' ').apply(lambda x: x[2])
+
+#%%
+df.describe().T
+
+#%%
 # projects started by year
 
 df['year_start'] = df['first_start_date'].dt.year
@@ -154,5 +183,3 @@ diferenca = teste['real_end_date'] - teste['baseline_date_legal_act']
 
 # Filtra os valores menores que zero
 teste[diferenca[(diferenca > pd.Timedelta(0)) & (diferenca <= pd.Timedelta('100 days'))]]
-
-# %%
