@@ -1,12 +1,12 @@
-WITH detail_project AS ( -- 2521
+WITH detail_project AS (
     SELECT * FROM detail_project_fs
 ),
 
-detail_work AS ( -- 2330 projects
+detail_work AS (
     SELECT * FROM detail_work_fs
 ),
 
-projects AS ( -- 2494 projects
+projects AS (
     SELECT * FROM projects_fs
 ),
 

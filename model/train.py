@@ -8,25 +8,15 @@ from sklearn import metrics
 from sklearn import model_selection
 from sklearn import ensemble
 from sklearn import pipeline
-from sklearn import linear_model
 
 from feature_engine import encoding
-
-from sklearn.base import BaseEstimator, TransformerMixin
-
-from sklearn import cluster
-from sklearn import preprocessing
-
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 import mlflow
 # %%
 
 engine = sqlalchemy.create_engine('sqlite:///../data/table_store.db')
 
-with open('abt.sql', 'r', encoding='utf-8') as open_file:
-    query = open_file.read()
+query = "SELECT * FROM project_conc"
 
 df = pd.read_sql(query, engine)
 
@@ -38,52 +28,6 @@ df_atual = df.copy()
 print('Probabilidade de atrasar: ', df_atual['deadline'].mean())
 
 #%%
-
-def transform_data(df):
-
-    df_func = df.copy()
-    
-    df_func = df_func[(df_func['legal_deadline'] > 0 ) & (df_func['real_duration'] > 0)]
-
-    df_func['module_type'] = df_func['module'].str.split(' ').apply(lambda x: x[0])
-    df_func['module_value'] = df_func['module'].str.split(' ').apply(lambda x: x[1].replace('-', '').replace(',', '.'))
-    df_func['module_unit_value'] = df_func['module'].str.split(' ').apply(lambda x: x[2])
-
-    df_func['total_power'] = df_func['active_power'] + df_func['pos_reactive_power'] + df_func['neg_reactive_power']
-    
-    performance = df_func.groupby('agent')['deadline'].agg(['sum', 'count'])
-    performance['delay_rate'] = performance['sum'] / performance['count']
-    df_func = df_func.merge(performance, how='left', on='agent').drop(columns=['sum', 'count'])
-
-    df_func['delay_class'] = np.where(
-        df_func['delay_rate'] < 0.2, 1,
-        np.where((df_func['delay_rate'] >= 0.2) & (df_func['delay_rate'] < 0.5), 2, 3)
-    )
-    
-    df_func['complexity'] = (df_func['total_power'] / df_func['legal_deadline'] + df_func['km'] / df_func['legal_deadline']) * df_func['modules_number']
-    df_func = df_func.reset_index(drop=True)
-
-    order_columns = [
-        'project_type', #cat
-        'project_status',
-        'modules_number', #num
-        'module_type', #cat
-        'module_value', #num
-        'module_unit_value', #cat
-        'km', #num
-        'active_power', #num
-        'pos_reactive_power', #num
-        'neg_reactive_power',
-        'total_power',
-        'complexity',
-        'legal_deadline',
-        'delay_class',
-        'deadline' #num
-    ]
-
-    df_func = df_func.reset_index(drop=True)
-    
-    return df_func[order_columns]
 
 def report_metrics(y_true, y_proba, base, cohort=0.5):
 
@@ -102,30 +46,19 @@ def report_metrics(y_true, y_proba, base, cohort=0.5):
         }
 
     return res
-
-#%%
-
-df = transform_data(df)
-
-df_oot = df[(df['project_status'] == 'Em andamento') | 
-            (df['project_status'] == 'Planejado')]
-
-df_train = df[(df['project_status'] == 'Em operação') | 
-            (df['project_status'] == 'Concluído')]
-
 #%% 
 
 target = 'deadline'
-features = df.columns.difference([target, 'project_status']).tolist()
+features = df.columns.difference([target]).tolist()
 
 # %%
 
 X_train, X_test, y_train, y_test = model_selection.train_test_split(
-    df_train[features],
-    df_train[target],
+    df[features],
+    df[target],
     random_state=42,
     train_size=0.8,
-    stratify=df_train[target]
+    stratify=df[target]
 )
 
 print('A taxa de resposta na base Train:', y_train.mean())
@@ -159,7 +92,8 @@ with mlflow.start_run():
                                         param_grid=params, 
                                         cv=3,
                                         scoring='roc_auc',
-                                        n_jobs=-2)
+                                        n_jobs=-2,
+                                        verbose=3)
 
     model_pipeline = pipeline.Pipeline([
         ('One Hot Encode', onehot),
