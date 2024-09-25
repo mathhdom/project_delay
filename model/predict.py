@@ -29,6 +29,7 @@ df = pd.read_sql(query, engine)
 pred = model.predict_proba(df[features])
 proba_delay = pred[:,1]
 
+df = df[['project', 'project_status', 'module', 'project_type', 'agent', 'baseline_end_date', 'baseline_date_legal_act', 'legal_act', 'modules_number', 'km', 'active_power', 'pos_reactive_power', 'neg_reactive_power']]
 df['probaDelay'] = proba_delay
 
-df.to_sql('project_exec', engine, index=False, if_exists='replace')
+df.to_sql('project_exec_prediction', engine, index=False, if_exists='replace')
