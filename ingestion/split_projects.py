@@ -39,28 +39,8 @@ def transform_data(df):
     
     df_func['complexity'] = (df_func['total_power'] / df_func['legal_deadline'] + df_func['km'] / df_func['legal_deadline']) * df_func['modules_number']
     df_func = df_func.reset_index(drop=True)
-
-    order_columns = [
-        'project_type', #cat
-        'project_status',
-        'modules_number', #num
-        'module_type', #cat
-        'module_value', #num
-        'module_unit_value', #cat
-        'km', #num
-        'active_power', #num
-        'pos_reactive_power', #num
-        'neg_reactive_power',
-        'total_power',
-        'complexity',
-        'legal_deadline',
-        'delay_class',
-        'deadline' #num
-    ]
-
-    df_func = df_func.reset_index(drop=True)
     
-    return df_func[order_columns]
+    return df_func
 
 #%%
 
@@ -69,12 +49,29 @@ df_total = transform_data(df)
 #%%
 
 df_exec = df_total[(df_total['project_status'] == 'Em andamento') | 
-            (df_total['project_status'] == 'Planejado')].drop(columns=['project_status']).copy()
+            (df_total['project_status'] == 'Planejado')].copy()
 
-df_conc = df_total[(df_total['project_status'] == 'Em operação') | 
+df_treino = df_total[(df_total['project_status'] == 'Em operação') | 
             (df_total['project_status'] == 'Concluído')].drop(columns=['project_status']).copy()
 
 #%%
+df_treino = df_treino[[
+        'project_type',
+        'modules_number',
+        'module_type', 
+        'module_value',
+        'module_unit_value', 
+        'km',
+        'active_power',
+        'pos_reactive_power',
+        'neg_reactive_power',
+        'total_power',
+        'complexity',
+        'legal_deadline',
+        'delay_class',
+        'deadline'
+    ]]
+#%%
 
 df_exec.to_sql('project_exec', engine, index=False, if_exists='replace')
-df_conc.to_sql('project_conc', engine, index=False, if_exists='replace')
+df_treino.to_sql('project_conc', engine, index=False, if_exists='replace')
