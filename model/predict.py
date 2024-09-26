@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 import sqlalchemy
 
+from sklearn import pipeline
+
 import mlflow.sklearn
 
 import json
@@ -14,7 +16,7 @@ mlflow.set_tracking_uri('http://127.0.0.1:8080')
 model = mlflow.sklearn.load_model('models:/project_duration@champion')
 
 # %%
-model_info = mlflow.models.get_model_info('models:/project_duration/1')
+model_info = mlflow.models.get_model_info('models:/project_duration/2')
 features = [i['name'] for i in json.loads(model_info.signature_dict['inputs'])]
 
 #%%
