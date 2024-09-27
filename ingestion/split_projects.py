@@ -28,15 +28,6 @@ def transform_data(df):
 
     df_func['total_power'] = df_func['active_power'] + df_func['pos_reactive_power'] + df_func['neg_reactive_power']
     
-    #performance = df_func.groupby('agent')['deadline'].agg(['sum', 'count'])
-    #performance['delay_rate'] = performance['sum'] / performance['count']
-    #df_func = df_func.merge(performance, how='left', on='agent').drop(columns=['sum', 'count'])
-
-    #df_func['delay_class'] = np.where(
-    #    df_func['delay_rate'] < 0.2, 1,
-    #    np.where((df_func['delay_rate'] >= 0.2) & (df_func['delay_rate'] < 0.5), 2, 3)
-    #)
-    
     df_func['complexity'] = (df_func['total_power'] / df_func['legal_deadline'] + df_func['km'] / df_func['legal_deadline']) * df_func['modules_number']
     df_func = df_func.reset_index(drop=True)
     
@@ -68,7 +59,6 @@ df_treino = df_treino[[
         'total_power',
         'complexity',
         'legal_deadline',
-        #'delay_class',
         'deadline'
     ]]
 #%%
