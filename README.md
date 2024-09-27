@@ -1,5 +1,6 @@
 # Probability of Delay in Reinforcement and Improvement Projects in the Brazilian Electrical Transmission System
-![image](https://github.com/user-attachments/assets/4ee3fa36-d892-491e-a835-b2491b4c9cfd)
+
+![image](https://github.com/user-attachments/assets/38376061-a93d-4f97-a221-a7d9fd822853)
 
 The objective of the project is to calculate the probability of delay in substation and transmission line projects.
 
