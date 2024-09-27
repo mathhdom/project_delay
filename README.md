@@ -4,7 +4,7 @@
 
 The objective of the project is to calculate the probability of delay in substation and transmission line projects.
 
-#📝 Description
+# 📝 Description
 
 The first step was to obtain data from the Brazilian Electrical Agency through a Power BI report and ingest it into a raw database.
 
@@ -25,7 +25,7 @@ Finally, the data from the prediction was consumed by a Power BI report.
 
 With the Power BI report, decision-makers can use it to analyze delay risks, prioritize projects, and set action plans. 
 
-#🛠️ Technologies Used
+# 🛠️ Technologies Used
 
 - Python
 - Pandas
@@ -37,7 +37,7 @@ With the Power BI report, decision-makers can use it to analyze delay risks, pri
 - SQLite3
 - Power BI
 
-#📊 Results
+# 📊 Results
 
 The probability of delay from historical data, without any model, is around 61.25%. Therefore, any model that surpasses this target will be better than nothing.
 
@@ -53,7 +53,7 @@ When evaluating the model metrics, we have:
 - Test Recall: 0.957
 - Test Roc Auc: 0.916
 
-#💡 Conclusion
+# 💡 Conclusion
 
 Looking at the current accuracy compared to the historical probability, we can conclude that the model performs better than it.
 
